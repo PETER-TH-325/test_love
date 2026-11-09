@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Happy Birthday to My Love ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- ลิงก์ไฟล์ CSS ที่แยกไว้ -->
+    <link rel="stylesheet" href="crea.css">
+</head>
+
+<body>
+
+
+    <!-- STEP 1: หน้าแรกสุด -->
+    <div class="container" id="step1-box">
+        <h2 data-translate="s1_title">✨ มีความลับจะบอก...</h2>
+        <p data-translate="s1_desc">ห้ามกดเข้ามาดูเด็ดขาดนะ! 🧐</p>
+        <button onclick="goToStep2()" data-translate="s1_btn">อย่า กดนะ 😨</button>
+    </div>
+
+    <!-- STEP 2: หน้ากล่องใส่รหัสผ่าน -->
+    <div class="container hidden" id="step2-box">
+        <h2 data-translate="s2_title">🔒 พื้นที่ความลับของเธอ</h2>
+        <p data-translate="s2_desc">รหัสผ่านคืออะไรน่าลองทายดูสิ มี 6 ตัว 💕</p>
+        <input type="password" id="passcode" placeholder="••••" maxlength="6">
+        <button onclick="checkPassword()" data-translate="s2_btn">เปิดกล่องของขวัญ 🎁</button>
+        <div id="error" class="error-msg"></div>
+    </div>
+
+    <!-- STEP 3: หน้าการ์ดวันเกิดใบแรก -->
+    <div class="container hidden" id="step3-box">
+        <div class="card-content">
+            <div>
+                <span class="love-badge" data-translate="badge">Happy Birthday Sofia to me 💖</span>
+                <h2 data-translate="s3_title">สุขสันต์วันเกิดนะสุดที่รักของเค้า! 🎉🎂</h2>
+                <p data-translate="s3_desc" style="margin-bottom: 15px;">ขอบคุณที่เกิดมาให้เค้ารักนะค้าบ</p>
+            </div>
+
+            <div class="photo-container">
+                <img src="pic1.jpg" alt="My honey" class="pulse-photo">
+                <img src="pic2.jpg" alt="My honey" class="pulse-photo">
+                <img src="77893_0.jpg" alt="My honey" class="pulse-photo">
+            </div>
+
+            <div class="letter-box" data-translate="s3_letter">
+                <b>💌 ถึง... คนโปรดของเค้า</b><br>
+                ขอให้เธอมีความสุขมากๆ สุขภาพร่างกายแข็งแรง อยู่เป็นความสดใสให้เค้าแบบนี้ไปนานๆ เลยน้า รักเธอที่สุด! 🥰✨
+            </div>
+
+            <button onclick="goToStep4()" style="background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);"
+                data-translate="s3_btn">
+                🎁 เปิดการ์ดเซอร์ไพรส์อีกใบ... คลิ๊ก! ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 4: หน้าการ์ดฝังเพลง Spotify -->
+    <div class="container hidden" id="step4-box">
+        <div class="card-content">
+            <h2 data-translate="s4_title">🎶 เพลงพิเศษสำหรับเธอ 💖</h2>
+            <p data-translate="s4_desc">เปิดเพลงฟังแล้วรับความรู้สึกดีๆ จากเค้านะคะ!</p>
+
+            <div style="margin-bottom: 20px;">
+                <iframe style="border-radius:12px"
+                    src="https://open.spotify.com/embed/track/6fUMrGkGQFMGzaNDbwv64n?si=2e47db4d26ca4036" width="100%"
+                    height="152" frameBorder="0" allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"></iframe>
+            </div>
+
+            <button onclick="goToStep5()" style="background: linear-gradient(135deg, #000000 0%, #ff4d6d 100%);"
+                data-translate="step5_btn">
+                ✨ ไปหน้าสุดท้ายเซอร์ไพรส์ 🖤
+            </button>
+
+            <button onclick="backToStep3()"
+                style="background: #adb5bd; margin-top: 15px; font-size: 13px; padding: 8px;" data-translate="back_btn">
+                ⬅️ กลับไปหน้าการ์ดก่อนหน้า
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 5: หน้าสุดท้าย พื้นหลังสีดำ -->
+    <div class="container dark-card hidden" id="step5-box">
+        <div class="card-content">
+            <div style="font-size: 50px; margin-bottom: 10px;">🖤✨</div>
+            <div class="final-title">Happy Birthday Sofia to me 💕</div>
+            <p style="color: #bbb; margin-bottom: 20px;" data-translate="s5_desc">ขอบคุณทุกๆ อย่าง
+                ขอบคุณที่อยู่ข้างกันนะคับ 🖤✨</p>
+
+            <button onclick="burstLove(event)" style="background: linear-gradient(135deg, #ff4d6d 0%, #b7094c 100%);"
+                data-translate="love_btn">
+                รักนะ ❤️
+            </button>
+
+            <button onclick="backToStep4()"
+                style="background: #333; color: #ccc; margin-top: 15px; font-size: 13px; padding: 8px; border: 1px solid #555;"
+                data-translate="back_to_music">
+                🎵 กลับไปหน้าเพลง
+            </button>
+        </div>
+    </div>
+
+    <!-- โหลดไลบรารี Three.js และไฟล์ scip.js ให้ถูกต้อง -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="scip.js"></script>
+</body>
+
+</html>
