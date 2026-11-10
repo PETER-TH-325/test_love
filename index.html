@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Happy Birthday to My Love ❤️</title>
+    <title> My Love ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -282,7 +282,6 @@
             width: 100%;
         }
 
-        /* ปุ่มยอมแพ้ / ลองใหม่อีกครั้ง */
         .give-up-btn {
             background: linear-gradient(135deg, #48cae4 0%, #0077b6 100%);
             color: white;
@@ -374,7 +373,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* แผงปุ่มกดรหัสผ่าน Step 2 */
         .pin-display-s2 {
             width: 75%; height: 38px; border: 2px solid #ff758f; border-radius: 8px; margin: 0 auto 8px;
             display: flex; justify-content: center; align-items: center;
@@ -528,7 +526,6 @@
         .key-btn:active { transform: translateY(2px); box-shadow: 0 0 0 #c9184a; }
         .key-btn.clear { background: #adb5bd; box-shadow: 0 2px 0 #868e96; }
         .key-btn.ok { background: #38b000; box-shadow: 0 2px 0 #2b8a00; }
-        .error-message { color: #e63946; font-size: 11px; margin-top: 4px; min-height: 12px; }
 
         .photo-garland {
             position: relative; display: flex; justify-content: center; gap: 6px;
@@ -557,7 +554,7 @@
 
 <body>
 
-    <!-- SCREEN 0: ซองจดหมาย -->
+    <!-- SCREEN 0: ซองจดหมาย (รหัสผ่านชั้น 1) -->
     <div class="envelope-screen" id="envelope-screen">
         <div class="env-scene" id="envScene">
             <div class="env-back"></div>
@@ -597,34 +594,10 @@
     <div class="container hidden" id="step1-box">
         <h2>😁 มีความลับจะบอก...</h2>
         <p> ว่าด้านในนี้มีนะ...... 👻</p>
-        <button onclick="goToStep2()">ถ้ากลัวววก็อย่ากด....... 🤪</button>
+        <button onclick="goToStep3()">ถ้ากลัวววก็อย่ากด....... 🤪</button>
     </div>
 
-    <!-- STEP 2 -->
-    <div class="container hidden" id="step2-box">
-        <div class="card-content">
-            <h2>🔒นี้คือของที่จะมอบให้</h2>
-            <p>รหัสผ่านคืออะไรน่าลองทายดูสิ มี 6 ตัว 💕</p>
-            <div class="pin-display-s2" id="pinDisplayS2">------</div>
-            <div class="keypad-s2">
-                <button class="key-btn-s2" onclick="pressNumS2('1')">1</button>
-                <button class="key-btn-s2" onclick="pressNumS2('2')">2</button>
-                <button class="key-btn-s2" onclick="pressNumS2('3')">3</button>
-                <button class="key-btn-s2" onclick="pressNumS2('4')">4</button>
-                <button class="key-btn-s2" onclick="pressNumS2('5')">5</button>
-                <button class="key-btn-s2" onclick="pressNumS2('6')">6</button>
-                <button class="key-btn-s2" onclick="pressNumS2('7')">7</button>
-                <button class="key-btn-s2" onclick="pressNumS2('8')">8</button>
-                <button class="key-btn-s2" onclick="pressNumS2('9')">9</button>
-                <button class="key-btn-s2 clear" onclick="clearPinS2()">C</button>
-                <button class="key-btn-s2" onclick="pressNumS2('0')">0</button>
-                <button class="key-btn-s2 ok" onclick="checkPassword()">✔</button>
-            </div>
-            <div id="error" class="error-message"></div>
-        </div>
-    </div>
-
-    <!-- STEP 3 -->
+    <!-- STEP 3 (หน้าการ์ดอวยพร & เป่าเค้ก) -->
     <div class="container hidden" id="step3-box">
         <div class="card-content">
             <div>
@@ -653,7 +626,7 @@
                 </div>
             </div>
 
-            <div class="timer-text" id="timerDisplay">⏳ รอตั้งจิตอธิษฐาน... <span id="countdown">5</span> วินาที</div>
+            <div class="timer-text" id="timerDisplay">⏳ ขอพร... <span id="countdown">5</span> วินาที</div>
             <button class="btn-blow" id="blowBtn" disabled onclick="blowCandle()">🕯️ ดับเทียน</button>
 
             <div id="surpriseContent" class="hidden-after-blow">
@@ -668,16 +641,16 @@
         </div>
     </div>
 
-    <!-- STEP 4 -->
+    <!-- STEP 4 (หน้าจิ๊กซอว์ & เพลง) -->
     <div class="container hidden" id="step4-box">
         <div class="card-content">
             <h2>🧩 แตะรูปเพื่อสลับให้เป็นรูป 💖</h2>
-            <p>จิ้มรูปที่ 1 แล้วจิ้มรูปที่ 2 เพื่อสลับตำแหน่งต่อรูป (สู้ๆน่าاا 😘🤪)</p>
+            <p>จิ้มรูปที่ 1 แล้วจิ้มรูปที่ 2 เพื่อสลับตำแหน่งต่อรูป (สู้ๆน่าا😘🤪)</p>
             
             <div class="puzzle-container" id="puzzleBoard"></div>
-            <div id="puzzleMsg" class="hidden" style="color: #38b000; font-weight: 700; margin: 3px 0; font-size: 12.5px;">🎉 เย้! ต่อจิ๊กซอว์สำเร็จแล้ว ลองเปิดฟังได้เลย! 🎶</div>
+            <div id="puzzleMsg" class="hidden" style="color: #38b000; font-weight: 700; margin: 3px 0; font-size: 12.5px;"></div>
 
-            <!-- ปุ่มยอมแพ้ / ลองใหม่อีกครั้ง -->
+            <!-- ปุ่มยอมแพ้ / เอาใหม่ -->
             <button class="give-up-btn" id="actionPuzzleBtn" onclick="handlePuzzleAction()">🏳️ ยอมแพ้ 💔</button>
 
             <div id="musicSection" class="hidden-after-blow" style="margin-top: 3px; width: 100%;">
@@ -690,18 +663,45 @@
                     </button>
                 </div>
 
-                <button onclick="goToStep5()" style="background: linear-gradient(135deg, #000000 0%, #ff4d6d 100%); margin-top: 6px;">
-                    ✨ มีอีกหน้ามันคืออะไรกันน่าaา
+                <button onclick="goToStep2()" style="background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%); margin-top: 6px;">
+                    ✨ มีรหัสผ่านอีกอันให้ลองทายดูสิ 🔒
                 </button>
             </div>
 
-            <button onclick="backToStep3()" style="background: #adb5bd; margin-top: 5px; font-size: 12px; padding: 4px;">
+            <button onclick="backToStep3FromStep4()" style="background: #adb5bd; margin-top: 5px; font-size: 12px; padding: 4px;">
                 ⬅️ กลับไปหน้าการ์ดก่อนหน้า
             </button>
         </div>
     </div>
 
-    <!-- STEP 5 -->
+    <!-- STEP 2 (หน้ารหัสผ่านอันที่สอง) -->
+    <div class="container hidden" id="step2-box">
+        <div class="card-content">
+            <h2>🔒นี้คือของที่จะมอบให้</h2>
+            <p>รหัสผ่านคืออะไรน่าลองทายดูสิ มี 6 ตัว 💕</p>
+            <div class="pin-display-s2" id="pinDisplayS2">------</div>
+            <div class="keypad-s2">
+                <button class="key-btn-s2" onclick="pressNumS2('1')">1</button>
+                <button class="key-btn-s2" onclick="pressNumS2('2')">2</button>
+                <button class="key-btn-s2" onclick="pressNumS2('3')">3</button>
+                <button class="key-btn-s2" onclick="pressNumS2('4')">4</button>
+                <button class="key-btn-s2" onclick="pressNumS2('5')">5</button>
+                <button class="key-btn-s2" onclick="pressNumS2('6')">6</button>
+                <button class="key-btn-s2" onclick="pressNumS2('7')">7</button>
+                <button class="key-btn-s2" onclick="pressNumS2('8')">8</button>
+                <button class="key-btn-s2" onclick="pressNumS2('9')">9</button>
+                <button class="key-btn-s2 clear" onclick="clearPinS2()">C</button>
+                <button class="key-btn-s2" onclick="pressNumS2('0')">0</button>
+                <button class="key-btn-s2 ok" onclick="checkPassword()">✔</button>
+            </div>
+            <div id="error" class="error-message"></div>
+            <button onclick="backToStep4FromStep2()" style="background: #adb5bd; margin-top: 10px; font-size: 12px; padding: 6px;">
+                ⬅️ กลับไปหน้าเพลง
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 5 (หน้าสุดท้าย) -->
     <div class="container dark-card hidden" id="step5-box">
         <div class="card-content">
             <div class="final-title">Happy Birthday kab bibi 💕</div>
@@ -722,8 +722,8 @@
             <button onclick="burstLove(event)" style="background: linear-gradient(135deg, #ff4d6d 0%, #b7094c 100%); margin-top: 3px;">
                 รักนะ ❤️
             </button>
-            <button onclick="backToStep4()" style="background: #333; color: #ccc; margin-top: 5px; font-size: 12px; padding: 4px; border: 1px solid #555;">
-                🎵 กลับไปหน้าเพลง
+            <button onclick="backToStep2FromStep5()" style="background: #333; color: #ccc; margin-top: 5px; font-size: 12px; padding: 4px; border: 1px solid #555;">
+                🎵 กลับไปหน้ารหัสผ่าน
             </button>
         </div>
     </div>
@@ -731,6 +731,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         let isPuzzleSolved = false;
+        let giveUpCount = 0; // ตัวนับจำนวนครั้งที่กดปุ่มยอมแพ้
 
         function toggleMusic() {
             const music = document.getElementById('bgMusic');
@@ -755,6 +756,7 @@
             }
         }
 
+        // ===== รหัสผ่านชั้น 2 =====
         const correctPassword = "101149";
         let currentPinS2 = '';
 
@@ -774,7 +776,7 @@
         }
 
         function goToStep2() {
-            document.getElementById("step1-box").classList.add("hidden");
+            document.getElementById("step4-box").classList.add("hidden");
             document.getElementById("step2-box").classList.remove("hidden");
         }
 
@@ -783,12 +785,18 @@
 
             if (currentPinS2 === correctPassword) {
                 document.getElementById("step2-box").classList.add("hidden");
-                document.getElementById("step3-box").classList.remove("hidden");
+                document.getElementById("step5-box").classList.remove("hidden");
+                document.body.classList.add("dark-mode");
             } else {
-                errorDiv.textContent = "รหัสผ่านไม่ถูกต้อง ลองนึกดูมันสำคัญมากๆ 😘";
+                errorDiv.textContent = "❌ รหัสผ่านไม่ถูกต้อง ลองนึกดูมันสำคัญมากๆ นี้คือคำใบ้ (300449)😘 ";
                 currentPinS2 = '';
                 updateDisplayS2();
             }
+        }
+
+        function goToStep3() {
+            document.getElementById("step1-box").classList.add("hidden");
+            document.getElementById("step3-box").classList.remove("hidden");
         }
 
         function goToStep4() {
@@ -797,20 +805,19 @@
             initPuzzle();
         }
 
-        function goToStep5() {
-            document.getElementById("step4-box").classList.add("hidden");
-            document.getElementById("step5-box").classList.remove("hidden");
-            document.body.classList.add("dark-mode");
-        }
-
-        function backToStep3() {
+        function backToStep3FromStep4() {
             document.getElementById("step4-box").classList.add("hidden");
             document.getElementById("step3-box").classList.remove("hidden");
         }
 
-        function backToStep4() {
-            document.getElementById("step5-box").classList.add("hidden");
+        function backToStep4FromStep2() {
+            document.getElementById("step2-box").classList.add("hidden");
             document.getElementById("step4-box").classList.remove("hidden");
+        }
+
+        function backToStep2FromStep5() {
+            document.getElementById("step5-box").classList.add("hidden");
+            document.getElementById("step2-box").classList.remove("hidden");
             document.body.classList.remove("dark-mode");
         }
 
@@ -821,8 +828,13 @@
 
         function initPuzzle() {
             isPuzzleSolved = false;
+            giveUpCount = 0; // รีเซ็ตจำนวนครั้งที่ยอมแพ้
+            
             const actionBtn = document.getElementById('actionPuzzleBtn');
-            if (actionBtn) actionBtn.textContent = "🏳️ ยอมแพ้ 💔";
+            if (actionBtn) {
+                actionBtn.textContent = "🏳️ ยอมแพ้ 💔";
+                actionBtn.classList.remove('hidden');
+            }
             
             do {
                 puzzleOrder.sort(() => Math.random() - 0.5);
@@ -870,30 +882,47 @@
                 renderPuzzle();
 
                 if (isEqual(puzzleOrder, winningOrder)) {
-                    solvePuzzleComplete();
+                    solvePuzzleComplete(true);
                 }
             }
         }
 
         function handlePuzzleAction() {
             const actionBtn = document.getElementById('actionPuzzleBtn');
+            
             if (!isPuzzleSolved) {
-                puzzleOrder = [...winningOrder];
-                renderPuzzle();
-                solvePuzzleComplete();
-                if (actionBtn) actionBtn.textContent = "🔄 ลองใหม่อีกครั้ง";
-            } else {
-                initPuzzle();
-                document.getElementById('puzzleMsg').classList.add('hidden');
-                document.getElementById('musicSection').classList.remove('show-after-blow');
+                giveUpCount++;
+                
+                if (giveUpCount === 1) {
+                    alert("สู้ๆ อีกนิดนึง ลองพยายามดูอีกรอบนะ! (กด 'ยอมแพ้' อีกครั้งถ้าไม่ไหวจริงๆ)");
+                } else if (giveUpCount >= 2) {
+                    // กดครบ 2 ครั้ง: ยอมแพ้ เฉลยภาพ
+                    puzzleOrder = [...winningOrder];
+                    renderPuzzle();
+                    solvePuzzleComplete(false);
+                }
             }
         }
 
-        function solvePuzzleComplete() {
+        function solvePuzzleComplete(isUserSolved) {
             isPuzzleSolved = true;
             const msgEl = document.getElementById('puzzleMsg');
-            msgEl.textContent = "😅 ค่อยเอาใหม่น่าคนเก่ง จิ๊กซอว์เสร็จแล้วเปิดฟังเพลงได้เลย!";
+            const actionBtn = document.getElementById('actionPuzzleBtn');
+
+            if (isUserSolved) {
+                msgEl.textContent = "✨ เก่งที่สุดเลยที่รักกกของผม 🎉";
+            } else {
+                msgEl.textContent = "😅 ไม่เป็นไรเอาใหม่น่าคนเก่งของผม";
+            }
+
             msgEl.classList.remove('hidden');
+            
+            // ** เมื่อแก้สำเร็จหรือยอมแพ้ครบ 2 ครั้ง ปุ่มยอมแพ้จะหายไป **
+            if (actionBtn) {
+                actionBtn.classList.add('hidden');
+            }
+
+            // แสดงส่วนเปิดเพลงและปุ่มไปหน้าถัดไป
             document.getElementById('musicSection').classList.add('show-after-blow');
         }
 
@@ -913,7 +942,6 @@
             heart.style.fontSize = size + 'px';
             heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
             
-            // คลิกที่อิโมจิเพื่อระเบิด
             heart.addEventListener('click', (e) => {
                 triggerBurstAt(e.clientX, e.clientY);
                 heart.remove();
@@ -953,6 +981,7 @@
             setTimeout(() => scene.classList.add('out'), 1500);
         }
 
+        // ===== รหัสผ่านชั้น 1 (หน้าซองจดหมาย) =====
         let currentPin = '';
         const correctPin = '231069';
 
@@ -977,7 +1006,7 @@
                 const step1 = document.getElementById('step1-box');
                 if (step1) step1.classList.remove('hidden');
             } else {
-                errorText.innerText = '❌ รหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง!';
+                errorText.innerText = '❌ รหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง! คำใบ้ (DDMMYY)';
                 currentPin = '';
                 updateDisplay();
             }
@@ -1006,7 +1035,7 @@
                 if (countdownEl) countdownEl.textContent = Math.max(timeLeft, 0);
                 if (timeLeft <= 0) {
                     clearInterval(cakeTimer);
-                    if (timerDisplayEl) timerDisplayEl.textContent = "✨ อธิษฐานเสร็จแล้ว เป่าเทียนได้เลย!";
+                    if (timerDisplayEl) timerDisplayEl.textContent = "✨ ขอพรเสร็จแล้ว เป่าเทียนได้เลย!";
                     if (blowBtn) blowBtn.disabled = false;
                 }
             }, 1000);
@@ -1020,7 +1049,7 @@
 
         function blowCandle() {
             document.querySelectorAll('.flame').forEach(f => f.classList.add('extinguished'));
-            if (timerDisplayEl) timerDisplayEl.textContent = "🎉 สุขสันต์วันเกิดนะคนสวย ขอให้คำอธิษฐานเป็นจริง! 💖";
+            if (timerDisplayEl) timerDisplayEl.textContent = "🎉 สุขสันต์วันเกิดนะคนสวย ขอให้พรที่ขอเป็นจริง! 💖";
             if (blowBtn) {
                 blowBtn.textContent = "🎂 เป่าเทียนแล้ว เย้! 🎉";
                 blowBtn.disabled = true;
