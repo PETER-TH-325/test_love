@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💖</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #0f050f;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .card {
+            position: absolute;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 320px;
+        }
+
+        h1 {
+            color: #ff6584;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .heart-icon {
+            font-size: 40px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="heart-icon">💖</div>
+        <h1>Para ti</h1>
+        <p>พื้นที่ตรงนี้แก้ไขข้อความบอกรักแฟนได้ตามใจชอบเลยนะ ขอบคุณที่เข้ามาทำให้ทุกวันเป็นวันที่พิเศษ 😊</p>
+    </div>
+
+    <!-- เรียกใช้งาน Three.js สำหรับทำ 3D Animation หัวใจ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // สร้างแสงในฉาก
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+
+        // สร้างกลุ่มหัวใจลอย 3D
+        const heartsGroup = new THREE.Group();
+        const geometry = new THREE.SphereGeometry(0.15, 16, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0xff3366 });
+
+        for (let i = 0; i < 60; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            );
+            heartsGroup.add(mesh);
+        }
+        scene.add(heartsGroup);
+
+        camera.position.z = 5;
+
+        // ฟังก์ชันขยับแอนิเมชัน
+        function animate() {
+            requestAnimationFrame(animate);
+            heartsGroup.rotation.y += 0.003;
+            heartsGroup.rotation.x += 0.002;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // ปรับขนาดหน้าจออัตโนมัติ
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+
+</html>

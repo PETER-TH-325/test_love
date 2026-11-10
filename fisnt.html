@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>A Special Letter For You 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #d81159;
+            transition: background 0.5s ease;
+        }
+
+        body.dark-mode {
+            background: #000000 !important;
+            color: #ff4d6d;
+        }
+
+        /* --- ส่วนของหน้าซองจดหมาย --- */
+        .envelope-wrapper {
+            position: absolute;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .envelope-wrapper.fade-out {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .envelope-container {
+            cursor: pointer;
+            position: relative;
+            width: 300px;
+            height: 200px;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.03);
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f06292;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .envelope-letter {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 80%;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.6s ease-in-out;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope-letter h3 {
+            color: #d81159;
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+
+        .envelope-letter p {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ec407a;
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out;
+            z-index: 4;
+        }
+
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid #f48fb1;
+            border-right: 150px solid #f48fb1;
+            border-bottom: 110px solid #f06292;
+            border-radius: 0 0 15px 15px;
+            z-index: 3;
+        }
+
+        .heart-seal {
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            z-index: 5;
+            transition: opacity 0.3s;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+
+        .envelope.open .lid {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .heart-seal {
+            opacity: 0;
+        }
+
+        .envelope.open .envelope-letter {
+            transform: translateY(-90px);
+            z-index: 6;
+        }
+
+        /* --- ส่วนเนื้อหาเว็บเซอร์ไพรส์หลัก --- */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #ffb3c1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #b7094c;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .lang-switch:hover { background: #fff; transform: scale(1.05); }
+
+        .heart-float {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            animation: flyUp 4s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .container.dark-card {
+            background: rgba(15, 15, 15, 0.95);
+            border: 2px solid #ff4d6d;
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.4);
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { margin-bottom: 10px; font-weight: 700; color: #b7094c; }
+        .dark-card h2 { color: #ff4d6d; }
+        p { color: #666; font-size: 14px; margin-bottom: 25px; }
+        .dark-card p { color: #ccc; }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ffb3c1;
+            border-radius: 15px;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+            margin-bottom: 15px;
+            letter-spacing: 5px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #d81159 0%, #ff4d6d 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(216, 17, 89, 0.3);
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 17, 89, 0.4); }
+        .hidden { display: none !important; }
+        .error-msg { color: #ff4d6d; font-size: 13px; margin-top: 10px; font-weight: 600; }
+
+        .card-content {
+            text-align: center;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .card-content::-webkit-scrollbar { width: 6px; }
+        .card-content::-webkit-scrollbar-thumb { background: #ffb3c1; border-radius: 10px; }
+
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pulse-photo {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ff4d6d;
+            box-shadow: 0 6px 15px rgba(216, 17, 89, 0.25);
+            animation: pulseEffect 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); box-shadow: 0 10px 20px rgba(216, 17, 89, 0.4); }
+            100% { transform: scale(1); }
+        }
+
+        .letter-box {
+            background: #fff9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #ffb3c1;
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.7;
+            color: #444;
+            font-size: 14.5px;
+        }
+
+        .love-badge {
+            background: #ffe5ec;
+            color: #d81159;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .final-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ff4d6d;
+            animation: finalPulse 1.5s ease-in-out infinite;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
+        }
+
+        @keyframes finalPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); text-shadow: 0 0 25px rgba(255, 77, 109, 0.9); }
+            100% { transform: scale(1); }
+        }
+
+        .kiss-pop {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            animation: burstUp 1s ease-out forwards;
+            z-index: 9999;
+        }
+
+        @keyframes burstUp {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+            100% { transform: translate(var(--rand-x), var(--rand-y)) scale(1.5); opacity: 0; }
+        }
+
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- หน้าแรก: ซองจดหมายเปิดผนึก -->
+    <div class="envelope-wrapper" id="envelope-screen">
+        <div class="envelope-container" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="pocket"></div>
+                <div class="envelope-letter">
+                    <h3>💖 ถึงคนพิเศษ...</h3>
+                    <p>กดเพื่อเปิดอ่านจดหมายเซอร์ไพรส์ข้างในนะ ✉️✨</p>
+                </div>
+                <div class="lid"></div>
+                <div class="heart-seal">❤️</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ปุ่มเปลี่ยนภาษา -->
+    <button class="lang-switch hidden" id="lang-btn" onclick="toggleLanguage()">🌐 EN / TH</button>
+
+    <!-- STEP 1: หน้าแรกสุด -->
+    <div class="container hidden" id="step1-box">
+        <h2 data-translate="s1_title">✨ มีความลับจะบอก...</h2>
+        <p data-translate="s1_desc">ห้ามกดเข้ามาดูเด็ดขาดนะ! 🧐</p>
+        <button onclick="goToStep2()" data-translate="s1_btn">อย่า กดนะ 😨</button>
+    </div>
+
+    <!-- STEP 2: หน้ากล่องใส่รหัสผ่าน -->
+    <div class="container hidden" id="step2-box">
+        <h2 data-translate="s2_title">🔒 พื้นที่ความลับของเธอ</h2>
+        <p data-translate="s2_desc">รหัสผ่านคืออะไรน่าลองทายดูสิ มี 6 ตัว 💕</p>
+        <input type="password" id="passcode" placeholder="••••" maxlength="6">
+        <button onclick="checkPassword()" data-translate="s2_btn">เปิดกล่องของขวัญ 🎁</button>
+        <div id="error" class="error-msg"></div>
+    </div>
+
+    <!-- STEP 3: หน้าการ์ดวันเกิดใบแรก -->
+    <div class="container hidden" id="step3-box">
+        <div class="card-content">
+            <div>
+                <span class="love-badge" data-translate="badge">Happy Birthday Sofia to me 💖</span>
+                <h2 data-translate="s3_title">สุขสันต์วันเกิดนะสุดที่รักของเค้า! 🎉🎂</h2>
+                <p data-translate="s3_desc" style="margin-bottom: 15px;">ขอบคุณที่เกิดมาให้เค้ารักนะค้าบ</p>
+            </div>
+
+            <div class="photo-container">
+                <img src="pic1.jpg" alt="My honey" class="pulse-photo">
+                <img src="pic2.jpg" alt="My honey" class="pulse-photo">
+                <img src="77893_0.jpg" alt="My honey" class="pulse-photo">
+            </div>
+
+            <div class="letter-box" data-translate="s3_letter">
+                <b>💌 ถึง... คนโปรดของเค้า</b><br>
+                ขอให้เธอมีความสุขมากๆ สุขภาพร่างกายแข็งแรง อยู่เป็นความสดใสให้เค้าแบบนี้ไปนานๆ เลยน้า รักเธอที่สุด! 🥰✨
+            </div>
+
+            <button onclick="goToStep4()" style="background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);" data-translate="s3_btn">
+                🎁 เปิดการ์ดเซอร์ไพรส์อีกใบ... คลิ๊ก! ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 4: หน้าการ์ดฝังเพลง Spotify -->
+    <div class="container hidden" id="step4-box">
+        <div class="card-content">
+            <h2 data-translate="s4_title">🎶 เพลงพิเศษสำหรับเธอ 💖</h2>
+            <p data-translate="s4_desc">เปิดเพลงฟังแล้วรับความรู้สึกดีๆ จากเค้านะคะ!</p>
+
+            <div style="margin-bottom: 20px;">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6fUMrGkGQFMGzaNDbwv64n?si=2e47db4d26ca4036" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+
+            <button onclick="goToStep5()" style="background: linear-gradient(135deg, #000000 0%, #ff4d6d 100%);" data-translate="step5_btn">
+                ✨ ไปหน้าสุดท้ายเซอร์ไพรส์ 🖤
+            </button>
+
+            <button onclick="backToStep3()" style="background: #adb5bd; margin-top: 15px; font-size: 13px; padding: 8px;" data-translate="back_btn">
+                ⬅️ กลับไปหน้าการ์ดก่อนหน้า
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 5: หน้าสุดท้าย พื้นหลังสีดำ -->
+    <div class="container dark-card hidden" id="step5-box">
+        <div class="card-content">
+            <div style="font-size: 50px; margin-bottom: 10px;">🖤✨</div>
+            <div class="final-title">Happy Birthday Sofia to me 💕</div>
+            <p style="color: #bbb; margin-bottom: 20px;" data-translate="s5_desc">ขอบคุณทุกๆ อย่าง ขอบคุณที่อยู่ข้างกันนะคับ 🖤✨</p>
+
+            <button onclick="burstLove(event)" style="background: linear-gradient(135deg, #ff4d6d 0%, #b7094c 100%);" data-translate="love_btn">
+                รักนะ ❤️
+            </button>
+
+            <button onclick="backToStep4()" style="background: #333; color: #ccc; margin-top: 15px; font-size: 13px; padding: 8px; border: 1px solid #555;" data-translate="back_to_music">
+                🎵 กลับไปหน้าเพลง
+            </button>
+        </div>
+    </div>
+
+    <!-- โหลด Three.js และสคริปต์ควบคุม -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ฟังก์ชันเปิดซองจดหมาย
+        function openEnvelope() {
+            const envelope = document.querySelector('.envelope');
+            envelope.classList.add('open');
+
+            setTimeout(() => {
+                document.getElementById('envelope-screen').classList.add('fade-out');
+                document.getElementById('step1-box').classList.remove('hidden');
+                document.getElementById('lang-btn').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('envelope-screen').style.display = 'none';
+                }, 500);
+            }, 800);
+        }
+
+        // หัวใจลอยเบื้องหลัง
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+        setInterval(createHeart, 300);
+
+        // ระบบรหัสผ่านและแปลภาษา
+        const correctPassword = "231069";
+        let currentLang = 'th';
+
+        const translations = {
+            th: {
+                s1_title: "✨ มีความลับจะบอก...",
+                s1_desc: "ห้ามกดเข้ามาดูเด็ดขาดนะ! 🧐",
+                s1_btn: "อย่า กดนะ 😨",
+                s2_title: "🔒 พื้นที่ความลับของเธอ",
+                s2_desc: "รหัสผ่านคืออะไรน่าลองทายดูสิ มี 6 ตัว 💕",
+                s2_btn: "เปิดกล่องของขวัญ 🎁",
+                err_msg: "รหัสผ่านไม่ถูกต้อง ลองนึกดูมันสำคัญมากๆ 😘",
+                badge: "Happy Birthday Sofia to me 💖",
+                s3_title: "สุขสันต์วันเกิดนะสุดที่รักของเค้า! 🎉🎂",
+                s3_desc: "ขอบคุณที่เกิดมาให้เค้ารักนะค้าบ",
+                s3_letter: "<b>💌 ถึง... คนโปรดของเค้า</b><br>ขอให้เธอมีความสุขมากๆ สุขภาพร่างกายแข็งแรง อยู่เป็นความสดใสให้เค้าแบบนี้ไปนานๆ เลยน้า รักเธอที่สุด! 🥰✨",
+                s3_btn: "🎁 เปิดการ์ดเซอร์ไพรส์อีกใบ... คลิ๊ก! ✨",
+                s4_title: "🎶 เพลงพิเศษสำหรับเธอ 💖",
+                s4_desc: "เปิดเพลงฟังแล้วรับความรู้สึกดีๆ จากเค้านะคะ!",
+                step5_btn: "✨ ไปหน้าสุดท้ายเซอร์ไพรส์ 🖤",
+                s5_desc: "ขอบคุณทุกๆ อย่าง ขอบคุณที่อยู่ข้างกันนะคับ 🖤✨",
+                love_btn: "รักนะ ❤️",
+                back_btn: "⬅️ กลับไปหน้าการ์ดก่อนหน้า",
+                back_to_music: "🎵 กลับไปหน้าเพลง"
+            },
+            en: {
+                s1_title: "✨ I have a secret...",
+                s1_desc: "Do not peek in here! 🧐",
+                s1_btn: "Do Not Click 😨",
+                s2_title: "🔒 Her Secret Area",
+                s2_desc: "Guess the 6-digit passcode 💕",
+                s2_btn: "Open Gift Box 🎁",
+                err_msg: "Incorrect passcode! Think about how important it is 😘",
+                badge: "Happy Birthday Sofia to me 💖",
+                s3_title: "Happy Birthday, My Love! 🎉🎂",
+                s3_desc: "Thank you for being born and letting me love you.",
+                s3_letter: "<b>💌 To... My Favorite Person</b><br>Wishing you endless happiness, great health, and stay as my sunshine forever. I love you the most! 🥰✨",
+                s3_btn: "🎁 Open another surprise card... Click! ✨",
+                s4_title: "🎶 Special Song For You 💖",
+                s4_desc: "Play the music and feel my love!",
+                step5_btn: "✨ Go to Final Surprise 🖤",
+                s5_desc: "Thank you for everything and for always being by my side 🖤✨",
+                love_btn: "Love You ❤️",
+                back_btn: "⬅️ Back to previous card",
+                back_to_music: "🎵 Back to Music"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'th' ? 'en' : 'th';
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
+
+        function goToStep2() {
+            document.getElementById("step1-box").classList.add("hidden");
+            document.getElementById("step2-box").classList.remove("hidden");
+        }
+
+        function checkPassword() {
+            const inputVal = document.getElementById("passcode").value;
+            const errorDiv = document.getElementById("error");
+
+            if (inputVal === correctPassword) {
+                document.getElementById("step2-box").classList.add("hidden");
+                document.getElementById("step3-box").classList.remove("hidden");
+            } else {
+                errorDiv.textContent = translations[currentLang].err_msg;
+            }
+        }
+
+        function goToStep4() {
+            document.getElementById("step3-box").classList.add("hidden");
+            document.getElementById("step4-box").classList.remove("hidden");
+        }
+
+        function goToStep5() {
+            document.getElementById("step4-box").classList.add("hidden");
+            document.getElementById("step5-box").classList.remove("hidden");
+            document.body.classList.add("dark-mode");
+        }
+
+        function backToStep3() {
+            document.getElementById("step4-box").classList.add("hidden");
+            document.getElementById("step3-box").classList.remove("hidden");
+        }
+
+        function backToStep4() {
+            document.getElementById("step5-box").classList.add("hidden");
+            document.getElementById("step4-box").classList.remove("hidden");
+            document.body.classList.remove("dark-mode");
+        }
+
+        function burstLove(event) {
+            const symbols = ['💋', '❤️', '💖', '✨', '😘', '💗'];
+            const rect = event.target.getBoundingClientRect();
+            const clickX = rect.left + rect.width / 2;
+            const clickY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 18; i++) {
+                const love = document.createElement('div');
+                love.classList.add('kiss-pop');
+                love.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 140 + 50;
+                const randX = Math.cos(angle) * distance;
+                const randY = Math.sin(angle) * distance;
+
+                love.style.left = clickX + 'px';
+                love.style.top = clickY + 'px';
+                love.style.setProperty('--rand-x', randX + 'px');
+                love.style.setProperty('--rand-y', randY + 'px');
+
+                document.body.appendChild(love);
+                setTimeout(() => { love.remove(); }, 1000);
+            }
+        }
+
+        // ระบบ Three.js (3D Background)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof THREE === 'undefined') return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.body.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+            scene.add(ambientLight);
+
+            const heartGroup = new THREE.Group();
+            const heartGeo = new THREE.SphereGeometry(0.1, 14, 14);
+            const heartMat = new THREE.MeshBasicMaterial({ color: 0xff3366 });
+
+            const particleCount = window.innerWidth < 768 ? 70 : 120;
+
+            for (let i = 0; i < particleCount; i++) {
+                const heartMesh = new THREE.Mesh(heartGeo, heartMat);
+                heartMesh.userData = {
+                    radius: 2.5 + Math.random() * 4.5,
+                    angle: Math.random() * Math.PI * 2,
+                    yOffset: (Math.random() - 0.5) * 5,
+                    speed: 0.004 + Math.random() * 0.006
+                };
+                
+                heartMesh.position.x = Math.cos(heartMesh.userData.angle) * heartMesh.userData.radius;
+                heartMesh.position.z = Math.sin(heartMesh.userData.angle) * heartMesh.userData.radius;
+                heartMesh.position.y = heartMesh.userData.yOffset;
+                
+                scene.add(heartMesh);
+                heartGroup.add(heartMesh);
+            }
+
+            camera.position.z = window.innerWidth < 768 ? 6.5 : 5.5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                heartGroup.children.forEach(mesh => {
+                    mesh.userData.angle += mesh.userData.speed;
+                    mesh.position.x = Math.cos(mesh.userData.angle) * mesh.userData.radius;
+                    mesh.position.z = Math.sin(mesh.userData.angle) * mesh.userData.radius;
+                });
+
+                heartGroup.rotation.y += 0.0025;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.position.z = window.innerWidth < 768 ? 6.5 : 5.5;
+            });
+        });
+    </script>
+</body>
+</html>

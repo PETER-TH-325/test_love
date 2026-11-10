@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>A Special Letter For You 💌</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 50%, #fda4af 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* เอฟเฟกต์หัวใจลอยพื้นหลัง */
+        .heart-float {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 24px;
+            animation: flyUp 4s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+        }
+
+        @keyframes flyUp {
+            0% {
+                transform: translateY(110vh) scale(0.4) rotate(0deg);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.6) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* กล่องห่อหุ้มซองจดหมาย */
+        .envelope-wrapper {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bounceIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .envelope-container {
+            cursor: pointer;
+            position: relative;
+            width: 320px;
+            height: 220px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 20px 30px rgba(216, 17, 89, 0.3));
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.06) rotate(1deg);
+        }
+
+        /* ตัวซองจดหมาย */
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff4d6d 0%, #c9184a 100%);
+            border-radius: 0 0 20px 20px;
+            box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* กระดาษจดหมายด้านในที่สไลด์ขึ้นมา */
+        .envelope-letter {
+            position: absolute;
+            bottom: 15px;
+            left: 6%;
+            width: 88%;
+            height: 85%;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ffb3c1;
+        }
+
+        /* ฝาปิดซองจดหมายบน */
+        .lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 125px solid #ff758f;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+            z-index: 4;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+        }
+
+        /* ช่องกระเป๋าซองด้านล่าง */
+        .pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #ff4d6d;
+            border-right: 160px solid #ff4d6d;
+            border-bottom: 120px solid #b7094c;
+            border-radius: 0 0 20px 20px;
+            z-index: 3;
+        }
+
+        /* ตราประทับรูปหัวใจ */
+        .heart-seal {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            z-index: 5;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            animation: pulseHeart 1.5s infinite;
+        }
+
+        @keyframes pulseHeart {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* เอฟเฟกต์เวลาเปิดซอง */
+        .envelope.open .lid {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .heart-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.5);
+        }
+
+        .envelope.open .envelope-letter {
+            transform: translateY(-110px) scale(1.05);
+            z-index: 6;
+            box-shadow: 0 20px 40px rgba(216, 17, 89, 0.25);
+        }
+
+        /* คำแนะนำด้านล่าง */
+        .hint-text {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            animation: fadeInOut 2s infinite alternate;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="envelope-wrapper" id="envelope-screen">
+        <div class="envelope-container" onclick="openEnvelope()">
+            <div class="envelope" id="envelope-box">
+                <div class="pocket"></div>
+
+                <!-- การ์ดด้านในพร้อมรูป QR Code -->
+                <div class="envelope-letter">
+                    <img src="qrcode.png" alt="QR Code"
+                        style="width: 120px; height: 120px; object-fit: contain; margin-bottom: 5px; border-radius: 8px;">
+                    <p style="font-size: 13px; font-weight: 600; color: #d81159; margin: 0;">สแกนเพื่อเปิดดูความลับ 💖✨
+                    </p>
+                </div>
+
+                <div class="lid"></div>
+                <div class="heart-seal">❤️</div>
+            </div>
+            <div class="hint-text">👆 จิ้มที่ซองจดหมายเพื่อเปิดอ่าน</div>
+        </div>
+    </div>
+
+    <script>
+        // สร้างเอฟเฟกต์หัวใจลอยพื้นหลัง
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            const symbols = ['❤️', '💖', '💗', '✨', '💕', '🌸'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 250);
+
+        // ฟังก์ชันสั่งเปิดซองจดหมาย
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope-box');
+            envelope.classList.add('open');
+        }
+    </script>
+</body>
+
+</html>
